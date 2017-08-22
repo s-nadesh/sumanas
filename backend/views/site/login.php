@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
@@ -10,26 +9,63 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+        <!--<h3 class="text-center">Braio</h3>-->
+        <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+        <p class="text-center">Sign in to get in touch</p>
+        <hr class="clean">
+        <?php
+        $form = ActiveForm::begin([
+                    'id' => 'login-form',
+                    'options' => ['role' => 'form'],
+        ]);
+        ?>
+        <?=
+        $form->field($model, 'username', [
+            'template' => '
+            <div class="form-group input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                {input}
+            </div>
+            {error}',
+            'inputOptions' => [
+                'placeholder' => 'Username',
+                'class' => 'form-control',
+            ]
+        ])
+        ?>
 
-    <p>Please fill out the following fields to login:</p>
+        <?=
+        $form->field($model, 'password', [
+            'template' => '
+            <div class="form-group input-group">
+                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                {input}
+            </div>
+            {error}',
+            'inputOptions' => [
+                'placeholder' => 'Password',
+                'class' => 'form-control',
+            ]
+        ])->passwordInput();
+        ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <?=
+        $form->field($model, 'rememberMe')->checkbox([
+            'template' => '
+            <div class="form-group">
+                <label class="cr-styled">
+                {input}
+                <i class="fa"></i> 
+                </label>
+                {label}
+            </div>
+            {error}',
+        ])
+        ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
+        <?= Html::submitButton('Login', ['class' => 'btn btn-purple btn-block', 'name' => 'login-button']) ?>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
